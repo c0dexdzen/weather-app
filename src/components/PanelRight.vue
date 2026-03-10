@@ -14,8 +14,7 @@
   }>();
 
   const emit = defineEmits<{
-    (e: 'select-index', index: number): void;
-    (e: 'select-city'): void;
+    'select-index': [index: number];
   }>();
 
   const statData = computed(() => {
@@ -41,50 +40,21 @@
 
 <template>
   <Error v-if="error" :error="error.error.message" />
-  <div v-if="data" class="stat-data">
-    <ul class="stat-list">
+  <div v-if="data" class="mb-[clamp(24px,8vw,70px)] flex flex-col gap-[clamp(24px,6vw,80px)]">
+    <ul class="m-0 flex list-none flex-col gap-3 p-0 sm:gap-4">
       <Stat v-for="item in statData" v-bind="item" :key="item.label" />
     </ul>
-    <div class="day-card-list">
+    <div class="flex min-w-0 gap-[clamp(4px,1vw,8px)]">
       <DayCard
         v-for="(item, i) in data.forecast.forecastday"
         :key="item.date"
         :weather-code="item.day.condition.code"
         :temp="item.day.avgtemp_c"
         :date="new Date(item.date)"
-        @click="() => emit('select-index', i)"
         :is-active="activeIndex === i"
+        @click="() => emit('select-index', i)"
       />
     </div>
   </div>
   <CitySelect />
 </template>
-
-<style scoped>
-  .day-card-list {
-    display: flex;
-    gap: clamp(4px, 1vw, 8px);
-    min-width: 0;
-  }
-  .stat-data {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(24px, 6vw, 80px);
-    margin-bottom: clamp(24px, 8vw, 70px);
-  }
-
-  .stat-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  @media (min-width: 480px) {
-    .stat-list {
-      gap: 16px;
-    }
-  }
-</style>

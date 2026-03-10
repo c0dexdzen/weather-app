@@ -22,10 +22,16 @@
 </script>
 
 <template>
-  <div class="city-select">
-    <div v-if="isEdited" class="city-input">
-      <Input v-model="inputValue" v-focus placeholder="Введите город" @keyup.enter="select()" />
-      <Button @click="select()">Сохранить</Button>
+  <div class="mt-auto w-full">
+    <div v-if="isEdited" class="flex flex-wrap items-center gap-3">
+      <Input
+        v-model="inputValue"
+        v-focus
+        placeholder="Введите город"
+        class="max-w-none min-w-0 flex-1"
+        @keyup.enter="select()"
+      />
+      <Button class="w-auto min-w-35 flex-none" @click="select()">Сохранить</Button>
     </div>
     <Button v-else @click="edit()">
       <IconLocation />
@@ -33,26 +39,3 @@
     </Button>
   </div>
 </template>
-
-<style scoped>
-  .city-input {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .city-input :deep(.input) {
-    flex: 1;
-    min-width: 0;
-    max-width: none;
-  }
-  .city-input :deep(.button) {
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 140px;
-  }
-  .city-select {
-    width: 100%;
-    margin-top: auto;
-  }
-</style>

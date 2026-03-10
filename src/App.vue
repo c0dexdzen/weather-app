@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import bgUrl from '@/assets/images/bg.png';
   import { onMounted, provide, ref, watch } from 'vue';
   import PanelLeft from './components/PanelLeft.vue';
   import PanelRight from './components/PanelRight.vue';
@@ -54,95 +55,30 @@
 </script>
 
 <template>
-  <main class="main">
-    <div class="cards-row">
-      <div class="left">
-        <PanelLeft v-if="data" :day-data="data.forecast.forecastday[activeIndex]" :location="data.location" />
+  <main class="p-3' box-border flex min-h-screen w-full items-center justify-center sm:p-4">
+    <div
+      class="flex min-h-0 w-full max-w-full flex-col items-stretch md:h-[min(680px,85vh)] md:w-[min(960px,100%)] md:flex-row lg:h-170 lg:w-[min(1000px,95vw)]"
+    >
+      <div
+        class="w-full shrink-0 rounded-t-[25px] bg-cover bg-no-repeat md:h-full md:w-[min(400px,45%)] md:rounded-l-[25px] md:rounded-tr-none"
+        :style="{ backgroundImage: `url(${bgUrl})` }"
+      >
+        <PanelLeft
+          v-if="data"
+          :day-data="data.forecast.forecastday[activeIndex]"
+          :location="data.location"
+        />
       </div>
-      <div class="right">
-        <PanelRight :data :error :active-index="activeIndex" @select-index="(i) => (activeIndex = i)" />
+      <div
+        class="box-border flex min-h-0 flex-col rounded-b-[25px] bg-(--color-bg-main) p-[24px_16px] sm:p-[28px_24px] md:h-full md:min-w-0 md:flex-1 md:rounded-r-[25px] md:rounded-bl-none md:p-[40px_36px] lg:p-[60px_50px]"
+      >
+        <PanelRight
+          :data
+          :error
+          :active-index="activeIndex"
+          @select-index="(i) => (activeIndex = i)"
+        />
       </div>
     </div>
   </main>
 </template>
-
-<style scoped>
-  .main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100%;
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-  }
-  .cards-row {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    max-width: 100%;
-    min-height: 0;
-  }
-  .left {
-    width: 100%;
-    min-height: 280px;
-    flex-shrink: 0;
-    border-radius: 25px 25px 0 0;
-    background-image: url('@/assets/images/bg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-  .right {
-    background: var(--color-bg-main);
-    padding: 24px 16px;
-    border-radius: 0 0 25px 25px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-  }
-
-  @media (min-width: 480px) {
-    .main {
-      padding: 16px;
-    }
-    .right {
-      padding: 28px 24px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .cards-row {
-      flex-direction: row;
-      width: min(960px, 100%);
-      height: min(680px, 85vh);
-    }
-    .left {
-      width: min(400px, 45%);
-      min-height: unset;
-      height: 100%;
-      border-radius: 25px 0 0 25px;
-    }
-    .right {
-      flex: 1;
-      min-width: 0;
-      padding: 40px 36px;
-      border-radius: 0 25px 25px 0;
-      height: 100%;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .cards-row {
-      width: min(1000px, 95vw);
-      height: 680px;
-    }
-    /* .left {
-      width: 500px;
-    } */
-    .right {
-      padding: 60px 50px;
-    }
-  }
-</style>

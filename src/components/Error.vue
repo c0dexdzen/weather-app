@@ -3,20 +3,7 @@
 </script>
 
 <template>
-  <div v-if="error" class="error">{{ error }}</div>
+  <div v-if="error" class="m-auto mb-5 bg-(--color-bg-card) p-3.75 text-center text-[18px] md:mb-0">
+    {{ error }}
+  </div>
 </template>
-
-<style scoped>
-  .error {
-    font-size: 18px;
-    padding: 15px;
-    text-align: center;
-    background: var(--color-bg-card);
-    margin: auto;
-  }
-  @media (max-width: 768px) {
-    .error {
-      margin-bottom: 20px;
-    }
-  }
-</style>

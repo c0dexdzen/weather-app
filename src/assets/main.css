@@ -1,34 +1,42 @@
-:root {
-  --color-primary: #ffffff;
-  --color-primary-inverted: #000000;
-  --color-bg: #343d4b;
-  --color-text-placeholder: #3f4958;
-  --color-bg-card: #272e37;
-  --color-bg-main: #222831;
-  --gradient: linear-gradient(91deg, rgba(144, 217, 224, 0.9) 0.2%, rgba(84, 96, 230, 0.9) 100%);
-  --gradient-inverted: linear-gradient(256deg, rgba(144, 217, 224, 0.9) 9.04%, rgba(84, 96, 230, 0.9) 92.2%);
-  --font: 'Montserrat', sans-serif;
-}
+@import 'tailwindcss';
 
-* {
-  box-sizing: border-box;
-}
+@layer base {
+  :root {
+    --color-primary: #ffffff;
+    --color-primary-inverted: #000000;
+    --color-bg: #343d4b;
+    --color-text-placeholder: #3f4958;
+    --color-bg-card: #272e37;
+    --color-bg-main: #222831;
+    --gradient: linear-gradient(91deg, rgba(144, 217, 224, 0.9) 0.2%, rgba(84, 96, 230, 0.9) 100%);
+    --gradient-inverted: linear-gradient(
+      256deg,
+      rgba(144, 217, 224, 0.9) 9.04%,
+      rgba(84, 96, 230, 0.9) 92.2%
+    );
+    --font: 'Montserrat', sans-serif;
+  }
 
-body {
-  font-family: var(--font);
-  color: var(--color-primary);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-bg);
-  min-height: 100vh;
-  margin: 0;
-}
+  * {
+    box-sizing: border-box;
+  }
 
-#app {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  body {
+    font-family: var(--font);
+    color: var(--color-primary);
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--color-bg);
+    min-height: 100vh;
+    margin: 0;
+  }
+
+  #app {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

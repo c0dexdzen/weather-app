@@ -30,77 +30,33 @@
 </script>
 
 <template>
-  <div class="paneLeft">
+  <div
+    class="flex h-full min-h-65 flex-col justify-between px-[clamp(20px,4vw,32px)] py-[clamp(20px,5vw,48px)] md:min-h-0"
+  >
     <div>
-      <div class="day">
+      <div class="mb-[clamp(8px,2vw,16px)] text-[clamp(22px,6vw,37px)] font-bold capitalize">
         {{ day }}
       </div>
-      <div class="date">
+      <div class="mb-2 text-[clamp(14px,3.5vw,22px)] font-medium">
         {{ date }}
       </div>
-      <div class="city">
+      <div class="flex items-center gap-2 text-[clamp(14px,3vw,18px)]">
         <IconLocation />
         {{ location?.name }} / {{ location?.country }}
       </div>
     </div>
     <div>
-      <div class="wetherIcon">
+      <div class="m-[clamp(12px,3vw,25px)]">
         <IconSun v-if="weatherCode <= 1003" :size="95" />
         <IconCloud v-if="weatherCode >= 1006 && weatherCode < 1063" :size="95" />
         <IconRain v-if="weatherCode >= 1063" :size="95" />
       </div>
-      <div class="temp">
+      <div class="mb-1.5 text-[clamp(32px,10vw,50px)] font-bold">
         {{ dayData.day.avgtemp_c }}
       </div>
-      <div class="condition">
+      <div class="text-[clamp(18px,4.5vw,30px)] font-bold">
         {{ dayData.day.condition.text }}
       </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-  .paneLeft {
-    display: flex;
-    flex-direction: column;
-    padding: clamp(20px, 5vw, 48px) clamp(20px, 4vw, 32px);
-    justify-content: space-between;
-    height: 100%;
-    min-height: 260px;
-  }
-  .day {
-    font-size: clamp(22px, 6vw, 37px);
-    font-weight: 700;
-    text-transform: capitalize;
-    margin-bottom: clamp(8px, 2vw, 16px);
-  }
-  .date {
-    font-size: clamp(14px, 3.5vw, 22px);
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-  .wetherIcon {
-    margin: clamp(12px, 3vw, 25px);
-  }
-  .city {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    font-size: clamp(14px, 3vw, 18px);
-  }
-  .temp {
-    font-size: clamp(32px, 10vw, 50px);
-    font-weight: 700;
-    margin-bottom: 6px;
-  }
-  .condition {
-    font-size: clamp(18px, 4.5vw, 30px);
-    font-weight: 700;
-  }
-
-  @media (min-width: 768px) {
-    .paneLeft {
-      min-height: 0;
-    }
-  }
-</style>

@@ -16,51 +16,20 @@
   });
 </script>
 <template>
-  <button class="day-card" :class="{ active: isActive }">
+  <button
+    class="flex w-full min-w-0 flex-1 cursor-pointer flex-col items-center justify-center gap-[clamp(8px,1.5vw,15px)] rounded-[clamp(8px,2vw,10px)] border-0 bg-(--color-bg-card) p-[clamp(12px,2.5vw,20px)_clamp(10px,2vw,24px)] text-(--color-primary) shadow-[1px_2px_4px_0px_#222831]"
+    :class="
+      isActive
+        ? 'bg-(--color-primary) text-(--color-primary-inverted) hover:bg-(--color-primary)'
+        : 'hover:bg-[#3a434f]'
+    "
+  >
     <IconSun v-if="weatherCode <= 1003" :color="iconColor" />
     <IconCloud v-if="weatherCode >= 1006 && weatherCode < 1063" :color="iconColor" />
     <IconRain v-if="weatherCode >= 1063" :color="iconColor" />
-    <div class="day-card__day">
+    <div class="text-[clamp(14px,3.5vw,20px)]">
       {{ date.toLocaleDateString('ru-RU', { weekday: 'short' }) }}
     </div>
-    <div class="day-card__temp">{{ temp }} °C</div>
+    <div class="text-[clamp(14px,3.5vw,20px)] font-bold">{{ temp }} °C</div>
   </button>
 </template>
-
-<style scoped>
-  .day-card {
-    width: 100%;
-    min-width: 0;
-    border-radius: clamp(8px, 2vw, 10px);
-    box-shadow: 1px 2px 4px 0px #222831;
-    color: var(--color-primary);
-    padding: clamp(12px, 2.5vw, 20px) clamp(10px, 2vw, 24px);
-    background-color: var(--color-bg-card);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(8px, 1.5vw, 15px);
-    border: none;
-    cursor: pointer;
-    flex: 1;
-  }
-
-  .active {
-    background-color: var(--color-primary);
-    color: var(--color-primary-inverted);
-  }
-
-  .day-card:not(.active):hover {
-    background-color: #3a434f;
-  }
-
-  .day-card__day {
-    font-size: clamp(14px, 3.5vw, 20px);
-  }
-
-  .day-card__temp {
-    font-size: clamp(14px, 3.5vw, 20px);
-    font-weight: 700;
-  }
-</style>
