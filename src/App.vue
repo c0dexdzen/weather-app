@@ -3,8 +3,8 @@
   import PanelLeft from './components/PanelLeft.vue';
   import PanelRight from './components/PanelRight.vue';
   import { API_ENDPOINT, cityProvide } from './constants';
-  import Weather from './types/weather';
-  import ApiError from './types/weather-error.types';
+  import type Weather from './types/weather';
+  import type ApiError from './types/weather-error.types';
 
   const data = ref<Weather | null>(null);
   const error = ref<ApiError | null>(null);
@@ -18,32 +18,37 @@
     },
   });
 
-  watch(city, () => getCity(city.value));
+  watch(city, (name) => fetchWeather(name));
+  onMounted(() => fetchWeather(city.value));
 
-  onMounted(() => getCity(city.value));
-
-  async function getCity(city: string) {
+  async function fetchWeather(name: string) {
     const params = new URLSearchParams({
-      q: city,
+      q: name,
       lang: 'ru',
       key: '6b04fbeb8b6a48d2ba6143411252602',
-      days: 3,
-    } as unknown as Record<string, string>);
+      days: '3',
+    });
 
     error.value = null;
     try {
       const response = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
-      if (!response.ok) {
-        error.value = (await response.json()) as ApiError;
-        data.value = null;
-      }
+      const json = await response.json();
 
-      data.value = (await response.json()) as Weather;
+      if (!response.ok) {
+        error.value = json as ApiError;
+        data.value = null;
+        return;
+      }
+      data.value = json as Weather;
     } catch (err: unknown) {
       console.log('Api error:', err);
-
       data.value = null;
-      error.value = err as ApiError;
+      error.value = {
+        error: {
+          code: 0,
+          message: err instanceof Error ? err.message : 'Ошибка сети',
+        },
+      };
     }
   }
 </script>

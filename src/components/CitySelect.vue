@@ -6,7 +6,7 @@
   import Input from './Input.vue';
 
   const cityStore = inject(cityProvide);
-  const inputValue = ref(cityStore?.value ?? '');
+  const inputValue = ref(cityStore?.value?.value ?? '');
 
   const isEdited = ref(false);
 
@@ -16,6 +16,7 @@
   }
 
   function edit() {
+    inputValue.value = cityStore?.value?.value ?? inputValue.value;
     isEdited.value = true;
   }
 </script>
