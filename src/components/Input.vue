@@ -1,5 +1,5 @@
-<script setup>
-  const data = defineModel({ type: String, required: true });
+<script setup lang="ts">
+  const data = defineModel<string>({ required: true, default: '' });
 </script>
 
 <template>

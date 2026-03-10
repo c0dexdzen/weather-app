@@ -1,17 +1,8 @@
-<script setup>
-  import Preloader from './Preloader.vue';
-
-  const { loading = false } = defineProps({
-    loading: Boolean,
-  });
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <button class="button" :disabled="loading">
-    <div v-if="loading">
-      <Preloader />
-    </div>
-    <slot v-else></slot>
+  <button class="button">
+    <slot></slot>
   </button>
 </template>
 

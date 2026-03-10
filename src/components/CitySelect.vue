@@ -1,18 +1,18 @@
-<script setup>
+<script setup lang="ts">
   import { inject, ref } from 'vue';
   import { cityProvide } from '../constants';
   import Button from './Button.vue';
   import IconLocation from './icon-components/IconLocation.vue';
   import Input from './Input.vue';
 
-  const city = inject(cityProvide);
-  const inputValue = ref(city.value);
+  const cityStore = inject(cityProvide);
+  const inputValue = ref(cityStore?.value ?? '');
 
-  let isEdited = ref(false);
+  const isEdited = ref(false);
 
   function select() {
     isEdited.value = false;
-    city.value = inputValue.value;
+    cityStore?.update(inputValue.value);
   }
 
   function edit() {

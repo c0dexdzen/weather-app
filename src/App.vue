@@ -1,39 +1,50 @@
-<script setup>
+<script setup lang="ts">
   import { onMounted, provide, ref, watch } from 'vue';
   import PanelLeft from './components/PanelLeft.vue';
   import PanelRight from './components/PanelRight.vue';
   import { API_ENDPOINT, cityProvide } from './constants';
+  import Weather from './types/weather';
+  import ApiError from './types/weather-error.types';
 
-  let data = ref();
-  let error = ref(null);
-  let activeIndex = ref(0);
-  let city = ref('Москва');
+  const data = ref<Weather | null>(null);
+  const error = ref<ApiError | null>(null);
+  const activeIndex = ref(0);
 
-  provide(cityProvide, city);
-
-  watch(city, () => {
-    getCity(city.value);
+  const city = ref('Moscow');
+  provide(cityProvide, {
+    value: city,
+    update: (newCity: string) => {
+      city.value = newCity;
+    },
   });
 
-  onMounted(() => {
-    getCity(city.value);
-  });
+  watch(city, () => getCity(city.value));
 
-  async function getCity(city) {
+  onMounted(() => getCity(city.value));
+
+  async function getCity(city: string) {
     const params = new URLSearchParams({
       q: city,
       lang: 'ru',
       key: '6b04fbeb8b6a48d2ba6143411252602',
       days: 3,
-    });
-    const res = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
-    if (res.status != 200) {
-      error.value = await res.json();
-      data.value = null;
-      return;
-    }
+    } as unknown as Record<string, string>);
+
     error.value = null;
-    data.value = await res.json();
+    try {
+      const response = await fetch(`${API_ENDPOINT}/forecast.json?${params.toString()}`);
+      if (!response.ok) {
+        error.value = (await response.json()) as ApiError;
+        data.value = null;
+      }
+
+      data.value = (await response.json()) as Weather;
+    } catch (err: unknown) {
+      console.log('Api error:', err);
+
+      data.value = null;
+      error.value = err as ApiError;
+    }
   }
 </script>
 
@@ -73,7 +84,7 @@
     min-height: 280px;
     flex-shrink: 0;
     border-radius: 25px 25px 0 0;
-    background-image: url('@/assets/bg.png');
+    background-image: url('@/assets/images/bg.png');
     background-repeat: no-repeat;
     background-size: cover;
   }

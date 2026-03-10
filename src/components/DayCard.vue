@@ -1,15 +1,15 @@
-<script setup>
+<script setup lang="ts">
   import { computed } from 'vue';
   import IconCloud from './icon-components/weather/IconCloud.vue';
   import IconRain from './icon-components/weather/IconRain.vue';
   import IconSun from './icon-components/weather/IconSun.vue';
 
-  const { weatherCode, temp, date, isActive } = defineProps({
-    weatherCode: Number,
-    temp: Number,
-    date: Date,
-    isActive: Boolean,
-  });
+  const { weatherCode, temp, date, isActive } = defineProps<{
+    weatherCode: number;
+    temp: number;
+    date: Date;
+    isActive: boolean;
+  }>();
 
   const iconColor = computed(() => {
     return isActive ? 'var(--color-primary-inverted)' : 'var(--color-primary)';

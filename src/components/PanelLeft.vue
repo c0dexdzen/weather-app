@@ -1,14 +1,16 @@
-<script setup>
+<script setup lang="ts">
+  import { ForecastDay } from '@/types/weather/forecast.types';
+  import WeatherLocation from '@/types/weather/location.types';
   import { computed } from 'vue';
   import IconLocation from './icon-components/IconLocation.vue';
   import IconCloud from './icon-components/weather/IconCloud.vue';
   import IconRain from './icon-components/weather/IconRain.vue';
   import IconSun from './icon-components/weather/IconSun.vue';
 
-  const { dayData } = defineProps({
-    dayData: Object,
-    location: Object,
-  });
+  const { dayData } = defineProps<{
+    dayData: ForecastDay;
+    location: WeatherLocation;
+  }>();
 
   const day = computed(() => {
     return new Date(dayData.date).toLocaleDateString('ru-RU', {

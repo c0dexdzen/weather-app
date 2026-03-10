@@ -1,8 +1,8 @@
-<script setup>
-  const { label = 'Не задан', stat } = defineProps({
-    label: String,
-    stat: String,
-  });
+<script setup lang="ts">
+  const { label = 'Не задан', stat } = defineProps<{
+    label: string;
+    stat: string;
+  }>();
 </script>
 
 <template>

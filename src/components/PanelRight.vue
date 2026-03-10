@@ -1,18 +1,22 @@
-<script setup>
-  import { errorMap } from '@/constants';
+<script setup lang="ts">
+  import Weather from '@/types/weather';
+  import ApiError from '@/types/weather-error.types';
   import { computed } from 'vue';
   import CitySelect from './CitySelect.vue';
   import DayCard from './DayCard.vue';
   import Error from './Error.vue';
   import Stat from './Stat.vue';
 
-  const { error, data, activeIndex } = defineProps({
-    error: Object,
-    data: Object,
-    activeIndex: Number,
-  });
+  const { error, data, activeIndex } = defineProps<{
+    error: ApiError | null;
+    data: Weather | null;
+    activeIndex: number;
+  }>();
 
-  const emit = defineEmits(['select-index', 'select-city']);
+  const emit = defineEmits<{
+    (e: 'select-index', index: number): void;
+    (e: 'select-city'): void;
+  }>();
 
   const statData = computed(() => {
     if (!data) {
@@ -33,14 +37,10 @@
       },
     ];
   });
-
-  const errorDisplay = computed(() => {
-    return errorMap.get(error?.error?.code);
-  });
 </script>
 
 <template>
-  <Error v-if="error" :error="errorDisplay" />
+  <Error v-if="error" :error="error.error.message" />
   <div v-if="data" class="stat-data">
     <ul class="stat-list">
       <Stat v-for="item in statData" v-bind="item" :key="item.label" />
@@ -52,8 +52,8 @@
         :weather-code="item.day.condition.code"
         :temp="item.day.avgtemp_c"
         :date="new Date(item.date)"
-        :is-active="activeIndex == i"
         @click="() => emit('select-index', i)"
+        :is-active="activeIndex === i"
       />
     </div>
   </div>
